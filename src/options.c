@@ -85,7 +85,9 @@ Bool double_comparisons = False;
 Bool flip_ranges = False;
 Bool generalize_to_constant = True;
 
-Bool no_exprs = False;
+Bool normal_exprs = True;
+Bool mark_based_exprs = False;
+
 Bool no_influences = False;
 Bool no_reals = False;
 Bool use_ranges = True;
@@ -145,7 +147,8 @@ Bool hg_process_cmd_line_option(const HChar* arg){
   else if VG_XACT_CLO(arg, "--no-mark-on-escape", mark_on_escape, False) {}
   else if VG_XACT_CLO(arg, "--no-compensation-detection", compensation_detection, False)
                        {}
-  else if VG_XACT_CLO(arg, "--no-exprs", no_exprs, True) {}
+  else if VG_XACT_CLO(arg, "--no-exprs", normal_exprs, False) {}
+  else if VG_XACT_CLO(arg, "--mark-based-exprs", mark_based_exprs, True) {}
   else if VG_XACT_CLO(arg, "--no-influences", no_influences, True) {}
   else if VG_XACT_CLO(arg, "--no-reals", no_reals, True) {}
   else if VG_XACT_CLO(arg, "--no-ranges", use_ranges, False) {}

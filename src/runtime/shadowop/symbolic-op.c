@@ -40,7 +40,7 @@
 void execSymbolicOp(ShadowOpInfo* opinfo, ConcExpr** result,
                     double computedResult, ShadowValue** args,
                     Bool problematic){
-  if (no_exprs){
+  if (!normal_exprs){
     return;
   }
   ConcExpr* exprArgs[MAX_BRANCH_ARGS];

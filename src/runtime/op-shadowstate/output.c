@@ -106,7 +106,7 @@ void writeOutput(void){
                     "  (objectfile \"%s\")\n",
                     objfile_name);
         }
-        if (output_mark_exprs && !no_exprs){
+        if (output_mark_exprs && normal_exprs){
           printBBuf(buf, "  (full-expr \n");
           int numVars;
           char* exprString = symbExprToString(markInfo->expr, &numVars);
@@ -134,7 +134,7 @@ void writeOutput(void){
         char* addrString = getAddrString(markInfo->addr);
         printBBuf(buf, " @ %s\n", addrString);
         VG_(free)(addrString);
-        if (output_mark_exprs && !no_exprs){
+        if (output_mark_exprs && normal_exprs){
           printBBuf(buf, "  Full expr:\n");
           int numVars;
           char* exprString = symbExprToString(markInfo->expr, &numVars);
@@ -207,7 +207,7 @@ void writeOutput(void){
                   "  (objectfile \"%s\")\n",
                   objname);
       }
-      if (output_mark_exprs && !no_exprs){
+      if (output_mark_exprs && normal_exprs){
         printBBuf(buf, "  (full-exprs \n");
         for(int i = 0; i < intMarkInfo->nargs; ++i){
           int numVars;
@@ -234,7 +234,7 @@ void writeOutput(void){
       char* addrString = getAddrString(intMarkInfo->addr);
       printBBuf(buf, " @ %s\n", addrString);
       VG_(free)(addrString);
-      if (output_mark_exprs && !no_exprs){
+      if (output_mark_exprs && normal_exprs){
         printBBuf(buf, "Full exprs:\n");
         for(int i = 0; i < intMarkInfo->nargs; ++i){
           int numVars;
@@ -325,7 +325,7 @@ void writeInfluences(Int fileD, InfluenceList influences){
     RangeRecord* totalRanges = NULL;
     RangeRecord* problematicRanges = NULL;
     double* exampleProblematicArgs = NULL;
-    if (!no_exprs){
+    if (normal_exprs){
       if (var_swallow){
         opinfo->expr = varSwallow(opinfo->expr);
       }
@@ -349,7 +349,7 @@ void writeInfluences(Int fileD, InfluenceList influences){
     if (output_sexp){
       printBBuf(buf,
                 "    (");
-      if (!no_exprs){
+      if (normal_exprs){
         printBBuf(buf,
                   "\n"
                   "     (expr\n"
@@ -422,7 +422,7 @@ void writeInfluences(Int fileD, InfluenceList influences){
                 local_error.max_error,
                 global_error.num_evals);
     } else {
-      if (!no_exprs){
+      if (normal_exprs){
         printBBuf(buf,
                   "\n"
                   "    (FPCore %s\n",
@@ -463,7 +463,7 @@ void writeInfluences(Int fileD, InfluenceList influences){
                 addrString);
       VG_(free)(addrString);
       printBBuf(buf, "\n");
-      if (numVars > 0 && use_ranges && !no_exprs){
+      if (numVars > 0 && use_ranges && normal_exprs){
         if (!fpcore_ranges || flip_ranges){
           writeRanges(buf, numVars, totalRanges);
         }

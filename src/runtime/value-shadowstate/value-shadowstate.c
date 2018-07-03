@@ -248,7 +248,7 @@ void freeShadowValue(ShadowValue* val){
     freeInfluenceList(val->influences);
     val->influences = NULL;
   }
-  if (!no_exprs){
+  if (normal_exprs){
     if (print_expr_refs){
       VG_(printf)("Disowning expression %p as part of freeing val %p\n",
                   val->expr, val);
@@ -273,7 +273,7 @@ ShadowValue* copyShadowValue(ShadowValue* val){
     copyReal(val->real, copy->real);
   }
   copy->expr = val->expr;
-  if (!no_exprs){
+  if (normal_exprs){
     recursivelyOwnConcExpr(copy->expr,
                            max_expr_block_depth * 2);
   }
@@ -332,7 +332,7 @@ ShadowValue* mkShadowValue(ValueType type, double value){
       VG_(HT_add_node)(type == Vt_Single ? valueCacheSingle : valueCacheDouble,
                        newEntry);
     }
-    if (!no_exprs){
+    if (normal_exprs){
       result->expr = mkLeafConcExpr(value);
     }
   } else {
